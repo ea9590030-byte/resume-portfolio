@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>個人簡歷 | Single Page Portfolio</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header.navbar {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: 1.4rem;
+    }
+
+    /* 1. 個人資訊 */
+    .profile {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .profile img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      transition: transform 0.25s ease;
+    }
+
+    .profile img:hover {
+      transform: scale(1.05);
+    }
+
+    .contact-links {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .contact-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* 2. 技能展示（預設進度條版，A/B 實驗會建分支切換） */
+    .skill-item {
+      margin-bottom: 14px;
+    }
+
+    .skill-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* 3. 工作／經歷時間軸 */
+    .timeline {
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-time {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* 4. 專案作品集卡片 */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #fafafa;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .project-role {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 6px 0;
+    }
+
+    /* 手機版響應式（寬度 < 600px） */
+    @media (max-width: 600px) {
+      header.navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-links {
+        gap: 12px;
+        font-size: 0.9rem;
+      }
+
+      .profile {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <strong>我的個人簡歷</strong>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">關於我</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#timeline">經歷</a></li>
+        <li><a href="#projects">作品集</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. 個人資訊區塊 -->
+    <section id="about">
+      <div class="profile">
+        <img src="avatar.png" alt="個人照片示意圖" />
+        <div>
+          <h1>陳冠媺</h1>
+          <p>資訊相關科系學生，努力學習專業課程。</p>
+          <div class="contact-links">
+            <span>Email：ea9590030@gmail.com</span>
+            <a href="https://github.com/ea9590030-byte" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 技能展示區（至少 3 項） -->
+    <section id="skills">
+      <h2>技能展示</h2>
+      <div class="skill-item">
+        <div class="skill-label"><span>簡報排版與美編</span><span>80%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-label"><span>樂團演奏與領導</span><span>75%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-label"><span>團隊協作與文件整理</span><span>85%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+      </div>
+    </section>
+
+    <!-- 3. 工作／經歷時間軸（至少 3 項，含國中／高中／大一等時期） -->
+    <section id="timeline">
+      <h2>經歷時間軸</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">國中時期</div>
+          <h3>班級幹部與課業學習</h3>
+          <p>培養基礎時間管理與團隊合作。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">高中時期</div>
+          <h3>生涯挖掘與社團參與</h3>
+          <p>參加學校樂團各式活動並挖掘自身興趣。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">大一時期</div>
+          <h3>專業課程與自我探索</h3>
+          <p>程式設計、資訊安全、醫療資訊等。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 專案作品集展示（至少 3 件作品，卡片式布局） -->
+    <section id="projects">
+      <h2>專案作品集</h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>高中學習歷程</h3>
+          <p class="project-role">個人資料統整與反思撰寫</p>
+          <p>社團與競賽參與、幹部擔任、未來規劃。</p>
+        </article>
+        <article class="project-card">
+          <h3>課程學習成果</h3>
+          <p class="project-role">課堂實驗紀錄與成果彙整</p>
+          <p>物理、化學、生物、數學等課程學習成果。</p>
+        </article>
+        <article class="project-card">
+          <h3>自主學習</h3>
+          <p class="project-role">主題發想、資料蒐集</p>
+          別人的隊伍比較快？—破解「排隊心理學」背後的數學真相 </p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
